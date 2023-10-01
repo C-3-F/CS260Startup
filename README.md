@@ -19,3 +19,13 @@ PyXel is a collaborative art project where individual pixels of a 1920 x 1080 ca
 ![Image](./docs/Prototype.png)	
 
 
+## HTML Deliverable
+
+For this deliverable I modified the following:
+
+* Added html pages in the `/src` directory for the home page, myPyXels, sign in , and store
+* Included placeholders on the home page for the live websocket data showing the status of the canvas
+* Add placeholders on store and my PyXels page representing data fetched from database
+* Add Sign in component form that links to the home page
+* Add nav links on each page that link to each other
+
