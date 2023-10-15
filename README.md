@@ -29,3 +29,10 @@ For this deliverable I modified the following:
 * Add Sign in component form that links to the home page
 * Add nav links on each page that link to each other
 
+## CSS Deliverable
+* Add Navbar CSS on each page
+* Add responsive elements to each page
+* Add Footer to each page
+* Edit text styles and colors for application
+* Application looks mostly like prototype
+
