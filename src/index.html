@@ -3,11 +3,12 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Sign In | PyXel</title>
-    <link rel="stylesheet" href="css/signin.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
   </head>
   <body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="./login.js"></script>
+    <script src="./mockPyxelDBData.js"></script>
     <main class="d-flex align-items-center vh-100">
       <div class="container my-auto justify-content-center align-items-center">
         <div class="row text-center">
@@ -17,7 +18,7 @@
         </div>
         <div class="row justify-content-center">
           <div class="col-6">
-            <form action="./home.html">
+            <form>
               <div class="form-group mb-3">
                 <label for="username">Username</label>
                 <input type="text" class="form-control" id="username" />
@@ -27,7 +28,7 @@
                 <input type="password" class="form-control" id="password" />
               </div>
               <div class="form-group mb-1 text-center">
-                <button type="submit" class="btn btn-primary">Sign In</button>
+                <button onclick="login()" type="button" class="btn btn-primary">Sign In</button>
               </div>
               <div class="form-group text-center">
                 <button type="button" class="btn btn-secondary">Create Account</button>
