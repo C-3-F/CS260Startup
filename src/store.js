@@ -19,7 +19,7 @@ function buy(id) {
   if (username) {
     pyxel.owner = username;
     setPyxel(pyxel);
-    // window.location.href = 'mypyxels.html';
+    window.location.href = 'mypyxels.html';
   }
 }
 
