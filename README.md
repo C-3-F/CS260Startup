@@ -36,3 +36,8 @@ For this deliverable I modified the following:
 * Edit text styles and colors for application
 * Application looks mostly like prototype
 
+## Javascript Deliverable
+* Added local array that is placeholder data for all the pyxels
+* Added login info to localstorage
+* Added event handlers for all UI elements and app now behaves properly
+* Add placeholder for the homepage which will hold the websocket with sample data
