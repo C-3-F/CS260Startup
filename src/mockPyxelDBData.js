@@ -41,34 +41,24 @@ let initialPyxelData = [
   },
 ];
 
-window.onload = function () {
-  if (!localStorage.getItem('initialPyxelData')) {
-    saveInitialPyxelData();
-  }
-};
-
-function saveInitialPyxelData() {
-  localStorage.setItem('initialPyxelData', JSON.stringify(initialPyxelData));
-}
-
 function setPyxel(pyxel) {
-  const pyxelData = JSON.parse(localStorage.getItem('initialPyxelData'));
-  pyxelData[pyxel.id - 1] = pyxel;
-  localStorage.setItem('initialPyxelData', JSON.stringify(pyxelData));
+  initialPyxelData[pyxel.id - 1] = pyxel;
 }
 
 function getPyxel(id) {
-  return JSON.parse(localStorage.getItem('initialPyxelData'))[id - 1];
+  return initialPyxelData[id - 1];
 }
 
 function getPyxels() {
-  return JSON.parse(localStorage.getItem('initialPyxelData'));
+  return initialPyxelData;
 }
 
 function getPyxelsByOwner(owner) {
-  return JSON.parse(localStorage.getItem('initialPyxelData')).filter((pyxel) => pyxel.owner === owner);
+  return initialPyxelData.filter((pyxel) => pyxel.owner === owner);
 }
 
 function getPyxelsByLocation(locationX, locationY) {
-  return JSON.parse(localStorage.getItem('initialPyxelData')).filter((pyxel) => pyxel.locationX === locationX && pyxel.locationY === locationY);
+  return initialPyxelData.filter((pyxel) => pyxel.locationX === locationX && pyxel.locationY === locationY);
 }
+
+module.exports = { setPyxel, getPyxel, getPyxels, getPyxelsByOwner, getPyxelsByLocation };
