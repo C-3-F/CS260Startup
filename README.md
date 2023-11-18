@@ -48,3 +48,9 @@ For this deliverable I modified the following:
 * Altered frontend to call backend service
 * Added third-party quote caption on the home page
 * Modulized DB functions
+
+## DB Deliverable
+* Added use of MongoDB into the project
+* All service endpoints now connect to DB and use live data
+* Client code store and myPyxels use DB endpoints
+* Updated main screen to also use DB endpoints instead of mock data
