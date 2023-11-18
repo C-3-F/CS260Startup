@@ -5,28 +5,33 @@ function createImageFromArray(pyxelArray) {
   canvas.height = 720;
   const ctx = canvas.getContext('2d');
 
-//  // Draw each pyxel on the canvas
-//   for (let i = 0; i < pyxelArray.length; i++) {
-//     const pyxel = pyxelArray[i];
-//     ctx.fillStyle = pyxel.color;
-//     console.log('color: ' + pyxel.color);
-//     ctx.fillRect(pyxel.x, pyxel.y, 1, 1);
-//   }
+  //Blank Canvas Background
+  ctx.rect(0, 0, 1280, 720);
+  ctx.fillStyle = '#808080';
+  ctx.fill();
 
-    //Test Image
-    for (let i = 0; i < 1280; i++) {
-      for (let j = 0; j < 720; j++) {
-        ctx.fillStyle = `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`;
-        ctx.fillRect(i, j, 1, 1);
-      }
-    }
+  //Test Image
+  // for (let i = 0; i < 1280; i++) {
+  //   for (let j = 0; j < 720; j++) {
+  //     ctx.fillStyle = `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`;
+  //     ctx.fillRect(i, j, 1, 1);
+  //   }
+  // }
+
+  // Draw each pyxel on the canvas
+  for (let i = 0; i < pyxelArray.length; i++) {
+    const pyxel = pyxelArray[i];
+    console.log(pyxel);
+    ctx.fillStyle = pyxel.color;
+    // console.log('color: ' + pyxel.color);
+    ctx.fillRect(pyxel.locationX, pyxel.locationY, 1, 1);
+  }
 
   // Convert the canvas to an image and return it
   const image = new Image();
   image.src = canvas.toDataURL();
   return image;
 }
-
 
 function displayQuote(data) {
   fetch('https://api.quotable.io/random')
@@ -47,10 +52,10 @@ function displayQuote(data) {
     });
 }
 
-
-window.onload = function () {
-  const pyxels = JSON.parse(localStorage.getItem('initialPyxelData'));
-  console.log('pyxels: ' + JSON.stringify(pyxels));
+window.onload = async function () {
+  // const pyxels = JSON.parse(localStorage.getItem('initialPyxelData'));
+  const response = await fetch('/api/pyxels');
+  const pyxels = await response.json();
   const pyxelImage = createImageFromArray(pyxels);
   pyxelImage.setAttribute('id', 'pyxel-board-image');
   pyxelImage.setAttribute('width', '100%');

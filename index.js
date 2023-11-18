@@ -1,5 +1,5 @@
 const express = require('express');
-const mockDb = require('./src/mockPyxelDBData')
+const db = require('./src/database')
 const app = express();
 
 // The service port. In production the front-end code is statically hosted by the service on the same port.
@@ -16,12 +16,13 @@ var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
 // Mock database routes
-apiRouter.get('/pyxels', (_req, res) => {
-  res.json(mockDb.getPyxels());
+apiRouter.get('/pyxels', async (_req, res) => {
+  res.json(await db.getPyxels());
 });
 
-apiRouter.get('/pyxels/:id', (req, res) => {
-  const pyxel = mockDb.getPyxel(req.params.id);
+apiRouter.get('/pyxels/:id', async (req, res) => {
+  const id = parseInt(req.params.id);
+  const pyxel = await db.getPyxel(id);
   if (pyxel) {
     res.json(pyxel);
   } else {
@@ -29,17 +30,19 @@ apiRouter.get('/pyxels/:id', (req, res) => {
   }
 });
 
-apiRouter.get('/pyxels/owner/:owner', (req, res) => {
-  res.json(mockDb.getPyxelsByOwner(req.params.owner));
+apiRouter.get('/pyxels/owner/:owner', async (req, res) => {
+  res.json(await db.getPyxelsByOwner(req.params.owner));
 });
 
-apiRouter.get('/pyxels/location/:locationX/:locationY', (req, res) => {
-  res.json(mockDb.getPyxelsByLocation(req.params.locationX, req.params.locationY));
+apiRouter.get('/pyxels/location/:locationX/:locationY', async (req, res) => {
+  const locationX = parseInt(req.params.locationX);
+  const locationY = parseInt(req.params.locationY);
+  res.json(await db.getPyxelsByLocation(locationX, locationY));
 });
 
-apiRouter.post('/pyxels', (req, res) => {
+apiRouter.post('/pyxels', async (req, res) => {
   const pyxel = req.body;
-  mockDb.setPyxel(pyxel);
+  await db.updatePyxel(pyxel);
   res.status(201).send();
 });
 

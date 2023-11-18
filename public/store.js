@@ -21,6 +21,8 @@ async function getPyxel(id) {
 async function buy(id) {
   console.log('buy');
   const pyxel = await getPyxel(id);
+  console.log('Pyxel to buy:');
+  console.log(pyxel);
   const username = localStorage.getItem('username');
   if (username) {
     pyxel.owner = username;
@@ -31,8 +33,8 @@ async function buy(id) {
 
 window.onload = async function () {
   const storeTableBodyElement = document.querySelector('#store-table-body');
-  const pyxels = await getPyxels()
-  const filteredPyxels = pyxels.filter((pyxel) => pyxel.owner === null);
+  const pyxels = await getPyxels();
+  const filteredPyxels = pyxels.filter((pyxel) => pyxel.owner === null || pyxel.owner === '');
   filteredPyxels.forEach((pyxel) => {
     const pyxelRow = document.createElement('tr');
     pyxelRow.innerHTML = `
