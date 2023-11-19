@@ -1,5 +1,5 @@
-async function getPyxelsByOwner(owner) {
-  const response = await fetch(`/api/pyxels/owner/${owner}`);
+async function getPyxelsByOwner() {
+  const response = await fetch('/api/mypyxels');
   return response.json();
 }
 
@@ -26,11 +26,7 @@ async function updatePyxelColor(id, color) {
 }
 
 window.onload = async function () {
-  if (!localStorage.getItem('username')) {
-    window.location.href = 'index.html';
-  }
-  const username = localStorage.getItem('username');
-  const userPyxels = await getPyxelsByOwner(username);
+  const userPyxels = await getPyxelsByOwner();
   const userPyxelsTableBodyElement = document.querySelector('#user-pyxels-table-body');
   userPyxels.forEach((pyxel) => {
     const pyxelRow = document.createElement('tr');

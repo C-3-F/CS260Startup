@@ -1,10 +1,9 @@
 async function setPyxel(pyxel) {
-  return fetch('/api/pyxels', {
+  return fetch(`/api/pyxels/buy/${pyxel.id}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(pyxel),
   });
 }
 
@@ -23,12 +22,8 @@ async function buy(id) {
   const pyxel = await getPyxel(id);
   console.log('Pyxel to buy:');
   console.log(pyxel);
-  const username = localStorage.getItem('username');
-  if (username) {
-    pyxel.owner = username;
-    await setPyxel(pyxel);
-    window.location.href = 'mypyxels.html';
-  }
+  await setPyxel(pyxel);
+  window.location.href = 'mypyxels.html';
 }
 
 window.onload = async function () {
