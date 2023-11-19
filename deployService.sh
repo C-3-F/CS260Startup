@@ -22,6 +22,7 @@ mkdir dist
 mkdir dist/src
 cp -r public dist
 cp src/*.js dist/src
+cp src/*.json dist/src
 cp *.js dist
 cp *.json dist
 
