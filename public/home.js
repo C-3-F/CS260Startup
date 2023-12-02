@@ -1,3 +1,5 @@
+let pyxelArray;
+
 function createImageFromArray(pyxelArray) {
   // Create a canvas element with the appropriate size
   const canvas = document.createElement('canvas');
@@ -21,7 +23,7 @@ function createImageFromArray(pyxelArray) {
   // Draw each pyxel on the canvas
   for (let i = 0; i < pyxelArray.length; i++) {
     const pyxel = pyxelArray[i];
-    console.log(pyxel);
+    // console.log(pyxel);
     ctx.fillStyle = pyxel.color;
     // console.log('color: ' + pyxel.color);
     ctx.fillRect(pyxel.locationX, pyxel.locationY, 1, 1);
@@ -54,16 +56,61 @@ function displayQuote(data) {
 
 window.onload = async function () {
   // const pyxels = JSON.parse(localStorage.getItem('initialPyxelData'));
+  configureWebSocket();
   const response = await fetch('/api/pyxels');
-  const pyxels = await response.json();
-  const pyxelImage = createImageFromArray(pyxels);
+  pyxelArray = await response.json();
+  const pyxelImage = createImageFromArray(pyxelArray);
   pyxelImage.setAttribute('id', 'pyxel-board-image');
   pyxelImage.setAttribute('width', '100%');
   pyxelImage.setAttribute('class', 'img-fluid');
   pyxelImage.setAttribute('alt', 'Pyxel Board');
-  console.log(pyxelImage);
   displayQuote();
-
-  const pyxelImageContainerElement = document.querySelector('#pyxel-board-container');
-  pyxelImageContainerElement.appendChild(pyxelImage);
+  updatePyxelImage(pyxelImage);
 };
+
+function configureWebSocket() {
+  const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+  const socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
+  socket.onopen = (event) => {
+    updateConnectionStatus('connected');
+  };
+  socket.onclose = (event) => {
+    updateConnectionStatus('disconnected');
+  };
+  socket.onmessage = async (event) => {
+    const msg = JSON.parse(await event.data.text());
+    console.log(msg);
+    if (msg.type === 'PyxelUpdateEvent') {
+      handlePyxelChange(msg);
+    }
+  };
+}
+
+function updateConnectionStatus(status) {
+  const statusEl = document.querySelector('#connection-status');
+  statusEl.innerHTML = status;
+  if (status === 'connected') {
+    statusEl.classList.remove('text-danger');
+    statusEl.classList.add('text-success');
+  } else {
+    statusEl.classList.remove('text-success');
+    statusEl.classList.add('text-danger');
+  }
+}
+
+function handlePyxelChange(pyxelData) {
+  // console.log('pyxelData: ' + pyxelData);
+  pyxelArray.forEach((element) => {
+    if (element.id === pyxelData.id) {
+      element.color = pyxelData.color;
+    }
+  });
+
+  const pyxelImage = createImageFromArray(pyxelArray);
+  updatePyxelImage(pyxelImage);
+}
+
+function updatePyxelImage(image) {
+  const pyxelImageContainerElement = document.querySelector('#pyxel-board-container');
+  pyxelImageContainerElement.replaceChildren(image);
+}

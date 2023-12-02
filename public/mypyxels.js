@@ -1,3 +1,5 @@
+const socket = configureWebSocket();
+
 async function getPyxelsByOwner() {
   const response = await fetch('/api/mypyxels');
   return response.json();
@@ -23,6 +25,7 @@ async function updatePyxelColor(id, color) {
   console.log(color);
   pyxel.color = color;
   await setPyxel(pyxel);
+  broadcastChange('PyxelUpdateEvent', id, color);
 }
 
 window.onload = async function () {
@@ -42,3 +45,14 @@ window.onload = async function () {
     userPyxelsTableBodyElement.appendChild(pyxelRow);
   });
 };
+
+function configureWebSocket() {
+  const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+  const socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
+  return socket;
+}
+
+function broadcastChange(type, id, color) {
+  const msg = JSON.stringify({ type: type, id: id, color: color });
+  socket.send(msg);
+}
