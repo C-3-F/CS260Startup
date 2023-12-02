@@ -3,6 +3,7 @@ const uuid = require('uuid');
 const bcrypt = require('bcrypt');
 const cookieParser = require('cookie-parser');
 const db = require('./src/database');
+const { websocket } = require('./src/websocket');
 const app = express();
 
 // The name of the cookie used for authentication
@@ -134,7 +135,7 @@ app.use((_req, res) => {
   res.sendFile('index.html', { root: 'public' });
 });
 
-app.listen(port, () => {
+const serverInstance = app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
 
@@ -147,3 +148,6 @@ function setAuthCookie(res, authToken) {
     sameSite: 'strict',
   });
 }
+
+// Websocket
+websocket(serverInstance);
