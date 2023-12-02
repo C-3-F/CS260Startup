@@ -54,3 +54,9 @@ For this deliverable I modified the following:
 * All service endpoints now connect to DB and use live data
 * Client code store and myPyxels use DB endpoints
 * Updated main screen to also use DB endpoints instead of mock data
+
+## Websocket Deliverable
+* Add websocket handler on server
+* Updating my pyxel color now sends data to websocket
+* Home page listens to updates from websocket and updates image
+
