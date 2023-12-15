@@ -60,3 +60,9 @@ For this deliverable I modified the following:
 * Updating my pyxel color now sends data to websocket
 * Home page listens to updates from websocket and updates image
 
+## React Deliverable
+* Convert all client code to react components
+* Dynamically render pyxels and other information
+* Move server into it's own layer
+
+
