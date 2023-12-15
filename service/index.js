@@ -2,8 +2,8 @@ const express = require('express');
 const uuid = require('uuid');
 const bcrypt = require('bcrypt');
 const cookieParser = require('cookie-parser');
-const db = require('./src/database');
-const { websocket } = require('./src/websocket');
+const db = require('./database');
+const { websocket } = require('./websocket');
 const app = express();
 
 // The name of the cookie used for authentication

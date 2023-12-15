@@ -1,4 +1,4 @@
-const db = require('./src/database.js');
+const db = require('./database.js');
 
 //FUll Image
 // for (let i = 0; i < 1280; i++) {
